@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
+using Console = Colorful.Console;
 
 namespace ttt {
     class Program {
         static string CurrentDirectory = Directory.GetCurrentDirectory();
-        static ConsoleColor CurrentForeground;
-        static ConsoleColor CurrentBackground;
+        static int FileNumber = 2;
 
         static void Main(string[] args) {
             InitConsole();
@@ -16,6 +17,12 @@ namespace ttt {
 
         private static void KeyPress() {
             do {
+                Console.Clear();
+                SwitchToTechText();
+                Console.WriteLine("ttt starts in: " + CurrentDirectory);
+                Console.WriteLine();
+                SwitchToFileText();
+                ListCurrentDir();
                 while (!Console.KeyAvailable) {
                 }
             } while (Console.ReadKey(true).Key != ConsoleKey.Q);
@@ -29,26 +36,22 @@ namespace ttt {
             string[] filePaths = Directory.GetFiles(CurrentDirectory);
             for (int i = 0; i < filePaths.Length; ++i) {
                 string path = filePaths[i];
-                Console.WriteLine(System.IO.Path.GetFileName(path));
+                if (i == FileNumber) {
+                    Console.WriteLine(System.IO.Path.GetFileName(path), Color.Red);
+                } else {
+                    Console.WriteLine(System.IO.Path.GetFileName(path));
+                }
             }
         }
 
         private static void InitConsole() {
-            CurrentForeground = Console.ForegroundColor; // init when needed
-            CurrentBackground = Console.BackgroundColor;
-            SwitchToTechText();
-            Console.WriteLine("ttt starts in: " + CurrentDirectory);
-            Console.WriteLine();
-            SwitchToFileText();
         }
 
         private static void SwitchToFileText() {
-            Console.ForegroundColor = CurrentForeground;
-            Console.BackgroundColor = CurrentBackground;
         }
 
         private static void SwitchToTechText() {
-            Console.ForegroundColor = ConsoleColor.Green;
         }
+
     }
 }
