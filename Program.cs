@@ -7,11 +7,11 @@ namespace ttt {
     class Program {
         static string CurrentDirectory = Directory.GetCurrentDirectory();
         static int FileNumber = 0;
+        static int FilesQuantity = 0;
 
         static void Main(string[] args) {
             InitConsole();
-            ListCurrentDir();
-            while (KeyPress() != 'q');
+            while (KeyPress() != 'q') ;
             ReleaseConsole();
         }
 
@@ -19,17 +19,18 @@ namespace ttt {
             char input;
 
             Console.Clear();
+            SwitchToRegularText();
             Console.WriteLine("ttt starts in: " + CurrentDirectory);
             Console.WriteLine();
             ListCurrentDir();
             input = Console.ReadKey(true).KeyChar;
             switch (input) {
                 case 'j': {
-                        ++FileNumber;
+                        if (FileNumber < (FilesQuantity - 1)) { ++FileNumber; }
                         break;
                     }
                 case 'k': {
-                        --FileNumber;
+                        if (FileNumber > 0) { --FileNumber; };
                         break;
                     }
                 case 'q': { break; }
@@ -43,9 +44,9 @@ namespace ttt {
 
         private static void ListCurrentDir() {
             string[] filePaths = Directory.GetFiles(CurrentDirectory);
-            for (int i = 0; i < filePaths.Length; ++i) {
-                string path = filePaths[i];
-                if (i == FileNumber) { SwitchToBoldText(); } else { SwitchToRegularText(); }
+            FilesQuantity = filePaths.Length;
+            foreach (string path in filePaths) {
+                if (filePaths[FileNumber] == path) { SwitchToBoldText(); } else { SwitchToRegularText(); }
                 Console.WriteLine(System.IO.Path.GetFileName(path));
             }
         }
