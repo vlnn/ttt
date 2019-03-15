@@ -11,17 +11,30 @@ namespace ttt {
         static void Main(string[] args) {
             InitConsole();
             ListCurrentDir();
-            KeyPress();
+            while (KeyPress() != 'q');
             ReleaseConsole();
         }
 
-        private static void KeyPress() {
-            do {
-                Console.Clear();
-                Console.WriteLine("ttt starts in: " + CurrentDirectory);
-                Console.WriteLine();
-                ListCurrentDir();
-            } while (Console.ReadKey(true).Key != ConsoleKey.Q);
+        private static char KeyPress() {
+            char input;
+
+            Console.Clear();
+            Console.WriteLine("ttt starts in: " + CurrentDirectory);
+            Console.WriteLine();
+            ListCurrentDir();
+            input = Console.ReadKey(true).KeyChar;
+            switch (input) {
+                case 'j': {
+                        ++FileNumber;
+                        break;
+                    }
+                case 'k': {
+                        --FileNumber;
+                        break;
+                    }
+                case 'q': { break; }
+            };
+            return input;
         }
 
         private static void ReleaseConsole() {
