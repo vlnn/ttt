@@ -42,6 +42,7 @@ namespace ttt {
 
         private static void ListCurrentDir() {
             string[] filePaths = Directory.GetFiles(CurrentDirectory);
+            Array.Sort(filePaths, StringComparer.InvariantCulture);
             FilesQuantity = filePaths.Length;
             foreach (string path in filePaths) {
                 if (filePaths[FileNumber] == path) { SwitchToBoldText(); } else { SwitchToRegularText(); }
