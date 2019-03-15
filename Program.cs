@@ -10,7 +10,15 @@ namespace ttt {
         static void Main(string[] args) {
             InitConsole();
             ListCurrentDir();
+            KeyPress();
             ReleaseConsole();
+        }
+
+        private static void KeyPress() {
+            do {
+                while (!Console.KeyAvailable) {
+                }
+            } while (Console.ReadKey(true).Key != ConsoleKey.Q);
         }
 
         private static void ReleaseConsole() {
