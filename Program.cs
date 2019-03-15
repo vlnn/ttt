@@ -6,7 +6,7 @@ using Console = Colorful.Console;
 namespace ttt {
     class Program {
         static string CurrentDirectory = Directory.GetCurrentDirectory();
-        static int FileNumber = 2;
+        static int FileNumber = 0;
 
         static void Main(string[] args) {
             InitConsole();
@@ -18,13 +18,9 @@ namespace ttt {
         private static void KeyPress() {
             do {
                 Console.Clear();
-                SwitchToTechText();
                 Console.WriteLine("ttt starts in: " + CurrentDirectory);
                 Console.WriteLine();
-                SwitchToFileText();
                 ListCurrentDir();
-                while (!Console.KeyAvailable) {
-                }
             } while (Console.ReadKey(true).Key != ConsoleKey.Q);
         }
 
@@ -36,22 +32,20 @@ namespace ttt {
             string[] filePaths = Directory.GetFiles(CurrentDirectory);
             for (int i = 0; i < filePaths.Length; ++i) {
                 string path = filePaths[i];
-                if (i == FileNumber) {
-                    Console.WriteLine(System.IO.Path.GetFileName(path), Color.Red);
-                } else {
-                    Console.WriteLine(System.IO.Path.GetFileName(path));
-                }
+                if (i == FileNumber) { SwitchToBoldText(); } else { SwitchToRegularText(); }
+                Console.WriteLine(System.IO.Path.GetFileName(path));
             }
         }
 
         private static void InitConsole() {
         }
 
-        private static void SwitchToFileText() {
+        private static void SwitchToRegularText() {
+            Console.Write("\u001b[0m");
         }
 
-        private static void SwitchToTechText() {
+        private static void SwitchToBoldText() {
+            Console.Write("\u001b[1m");
         }
-
     }
 }
